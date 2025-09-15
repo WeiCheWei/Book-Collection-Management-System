@@ -74,25 +74,6 @@ pip install -r requirements.txt
 python main.py
 ```
 
-### 虛擬環境安裝 (建議)
-
-```bash
-# 建立虛擬環境
-python -m venv book_collection_env
-
-# 啟動虛擬環境 (Windows)
-book_collection_env\Scripts\activate
-
-# 啟動虛擬環境 (macOS/Linux)  
-source book_collection_env/bin/activate
-
-# 安裝依賴
-pip install -r requirements.txt
-
-# 執行程式
-python main.py
-```
-
 ## 程式架構
 
 ### 架構概覽
