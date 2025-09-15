@@ -110,18 +110,29 @@ class MainFrame(wx.Frame):
         self.book_grid.SetLabelTextColour(wx.Colour(33, 37, 41))
         self.book_grid.SetGridLineColour(wx.Colour(222, 226, 230))
         
+        # 設置Grid字體大小
+        grid_font = wx.Font(12, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
+        self.book_grid.SetDefaultCellFont(grid_font)
+        
+        # 設置標題字體大小
+        header_font = wx.Font(13, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD)
+        self.book_grid.SetLabelFont(header_font)
+        
+        # 設置行高
+        self.book_grid.SetDefaultRowSize(30, True)
+        
         # 設置列標題
         headers = ["ID", "書名", "作者", "年份", "狀態", "評分"]
         for i, header in enumerate(headers):
             self.book_grid.SetColLabelValue(i, header)
         
-        # 設置列寬
-        self.book_grid.SetColSize(0, 80)
-        self.book_grid.SetColSize(1, 250)
-        self.book_grid.SetColSize(2, 180)
-        self.book_grid.SetColSize(3, 100)
-        self.book_grid.SetColSize(4, 120)
-        self.book_grid.SetColSize(5, 100)
+        # 設置列寬 (增加寬度以配合較大的字體)
+        self.book_grid.SetColSize(0, 100)
+        self.book_grid.SetColSize(1, 320)
+        self.book_grid.SetColSize(2, 220)
+        self.book_grid.SetColSize(3, 120)
+        self.book_grid.SetColSize(4, 150)
+        self.book_grid.SetColSize(5, 120)
         
         # 設置欄位標題對齊方式 (所有標題都置中)
         self.book_grid.SetColLabelAlignment(wx.ALIGN_CENTRE, wx.ALIGN_CENTRE)

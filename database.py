@@ -42,6 +42,24 @@ class DatabaseManager:
             print(f"資料庫初始化失敗: {e}")
             raise
     
+    def get_next_id(self) -> int:
+        """
+        獲取下一個可用的ID (現有最大ID + 1)
+        
+        Returns:
+            int: 下一個可用的ID
+        """
+        try:
+            with sqlite3.connect(self.db_path) as conn:
+                cursor = conn.cursor()
+                cursor.execute('SELECT MAX(id) FROM books')
+                result = cursor.fetchone()
+                max_id = result[0] if result[0] is not None else 0
+                return max_id + 1
+        except sqlite3.Error as e:
+            print(f"獲取最大ID失敗: {e}")
+            return 1
+    
     def add_book(self, book: Book) -> bool:
         """
         新增書籍到資料庫
@@ -58,16 +76,19 @@ class DatabaseManager:
             if not is_valid:
                 raise ValueError(error_msg)
             
+            # 獲取下一個可用的ID
+            next_id = self.get_next_id()
+            
             with sqlite3.connect(self.db_path) as conn:
                 cursor = conn.cursor()
                 cursor.execute('''
-                    INSERT INTO books (title, author, year, status, rating)
-                    VALUES (?, ?, ?, ?, ?)
-                ''', (book.title, book.author, book.year, book.status, book.rating))
+                    INSERT INTO books (id, title, author, year, status, rating)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                ''', (next_id, book.title, book.author, book.year, book.status, book.rating))
                 
-                book.id = cursor.lastrowid
+                book.id = next_id
                 conn.commit()
-                print(f"成功新增書籍: {book.title}")
+                print(f"成功新增書籍: {book.title} (ID: {next_id})")
                 return True
                 
         except (sqlite3.Error, ValueError) as e:
