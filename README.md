@@ -100,7 +100,7 @@ python main.py
 
 本專案採用分層架構設計，將功能模組化以提高可維護性和可擴展性：
 
-![系統架構圖](images/project_architecture.jpg)
+[![專案架構圖](images/project_architecture.jpg)](images/project_architecture.jpg)
 
 ### 模組依賴關係
 
