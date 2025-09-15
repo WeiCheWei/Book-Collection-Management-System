@@ -54,7 +54,6 @@
 ```bash
 # 複製專案
 git clone https://github.com/WeiCheWei/Book-Collection-Management-System.git
-cd Book-Collection-Management-System
 
 # 安裝依賴套件
 pip install -r requirements.txt
