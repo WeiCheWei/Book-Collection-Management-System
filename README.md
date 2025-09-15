@@ -29,7 +29,7 @@
 - 支援自訂儲存位置
 - 包含完整的書籍資訊
 
-### 🛡️ 資料驗證與錯誤處理
+### 資料驗證與錯誤處理
 - 輸入資料驗證 (書名、作者不可為空，年份必須為有效數字等)
 - 友善的錯誤訊息提示
 - 完整的異常處理機制
@@ -54,7 +54,6 @@
 ```bash
 # 複製專案
 git clone https://github.com/WeiCheWei/Book-Collection-Management-System.git
-cd book-collection-management
 
 # 安裝依賴套件
 pip install -r requirements.txt
