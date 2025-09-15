@@ -1,0 +1,12 @@
+# 書籍收藏管理系統依賴包
+# Personal Book Collection Management System Dependencies
+
+# GUI 框架
+wxPython>=4.1.0
+
+# 資料庫 (Python 內建，無需安裝)
+# sqlite3
+
+# 其他標準庫 (Python 內建，無需安裝)
+# csv
+# typing
