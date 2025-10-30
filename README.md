@@ -242,7 +242,56 @@ mid-project/
 - 避免特殊字符顯示問題
 - 純文字界面設計
 
+## 核心程式碼片段
 
+### 1. 資料庫模糊搜索實現
+```python
+# 創建模糊搜索模式，% 代表匹配任意字元序列
+search_pattern = f"%{keyword}%"
+cursor.execute(
+    '''
+        SELECT id, title, author, year, status, rating 
+        FROM books 
+        WHERE title LIKE ? OR author LIKE ?
+        ORDER BY id
+    ''', (search_pattern, search_pattern)) # 參數化查詢，防止 SQL 注入  
+```
+### 2. 即時統計更新機制
+```python
+def update_statistics(self):
+    """更新統計資訊 - 實現即時數據刷新"""
+    books = self.db_manager.get_all_books()
+    
+    total_count = len(books)
+    read_count = len([b for b in books if b.status == "已讀"])
+    reading_count = len([b for b in books if b.status == "閱讀中"])
+    unread_count = len([b for b in books if b.status == "未讀"])
+
+    # 更新統計標籤
+    self.total_books_label.SetLabel(f"總書籍數: {total_count}")
+    self.read_books_label.SetLabel(f"已讀: {read_count}")
+    
+    # 計算閱讀進度百分比
+    if total_count > 0:
+        read_percentage = round((read_count / total_count) * 100, 1)
+        self.SetStatusText(f"已讀進度: {read_percentage}%")
+```
+### 3. 資料驗證機制
+```python
+def validate(self) -> Tuple[bool, str]:
+    """多層資料驗證確保資料完整性"""
+    if not self.title.strip():
+        return False, "書名不能為空"
+    if not self.author.strip():
+        return False, "作者不能為空"
+    if not isinstance(self.year, int) or self.year < 0 or self.year > 2025:
+        return False, "出版年份必須是有效的數字(0-2025)"
+    if self.status not in ["未讀", "閱讀中", "已讀"]:
+        return False, "閱讀狀態必須是：未讀、閱讀中、已讀 其中之一"
+    if not isinstance(self.rating, int) or self.rating < 0 or self.rating > 5:
+        return False, "評分必須是0-5之間的整數"
+    return True, ""
+```
 
 ---
 
